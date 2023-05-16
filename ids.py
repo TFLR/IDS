@@ -26,9 +26,6 @@ IPTABLES_CMD = "sudo iptables -A INPUT -s {} -j DROP"
 # Liste pour stocker les adresses IP suspectes
 BLACKLIST = []
 
-
-NUM_REQUESTS_TO_CHECK = 10
-
 LASTBODYMAIL = ""
 
 # Fonction pour ajouter une adresse IP à la liste noire d'Iptables
@@ -37,9 +34,6 @@ def add_to_blacklist(ip):
         BLACKLIST.append(ip)
         # Exécute la commande Iptables pour ajouter l'adresse IP à la liste noire
         subprocess.run(IPTABLES_CMD.format(ip), shell=True)
-
-
-
 
 def sendmail(bodymail):
      global LASTBODYMAIL
