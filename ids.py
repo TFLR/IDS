@@ -38,9 +38,6 @@ def add_to_blacklist(ip):
         # Exécute la commande Iptables pour ajouter l'adresse IP à la liste noire
         subprocess.run(IPTABLES_CMD.format(ip), shell=True)
 
-
-
-
 def sendmail(bodymail):
      global LASTBODYMAIL
      message = MIMEMultipart()
