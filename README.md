@@ -14,3 +14,11 @@ Apache : '/var/log/apache2/access.log'
 Mysql : '/var/log/mysql/mysql/log'
 
 ![image](https://github.com/TFLR/IDS/assets/79453369/a6834b8c-a6c7-4f42-847b-80f628a66f6f)
+
+Installation:
+-------------
+
+Requis:
+- [Python2 >= 2.7 or Python >= 3.2](https://www.python.org) or [PyPy](https://pypy.org)
+- python-setuptools, python-distutils or python3-setuptools for installation from source
+
