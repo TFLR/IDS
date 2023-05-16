@@ -6,7 +6,7 @@
     v1.0        
 
 
-## IDS: Détection Injection SQL , Failles XXS , Outils (Nikto, Sqlmap) , BruteForce et DDOS avec Bannissement d'IP.
+## IDS: Détection Injection SQL , Failles XXS , Outils (Nikto, Sqlmap) , BruteForce et DDOS avec Bannissement d'IP et envoi de mail à l'administrateur.
 
 Notre IDS est fonctionnel avec apache et mysql. Il scan les fichiers de logs d'apache ainsi que celui de mysql pour détecter des vulnérabilités et des attaques malveillantes.
 
@@ -19,11 +19,28 @@ Installation:
 -------------
 
 Requis:
+
 - [Python2 >= 2.7 or Python >= 3.2](https://www.python.org) or [PyPy](https://pypy.org)
 - python-setuptools, python-distutils or python3-setuptools for installation from source
+- iptables
+- apache2
+- mysql-server
+
+Activer les logs mysql:
+
+SET GLOBAL general_log_file = "/var/log/mysql/mysql.log";
+SET GLOBAL general_log = 'ON';
 
 Exécution:
 
 https://github.com/TFLR/IDS.git</br>
 cd IDS</br>
 sudo python3 ids.py</br>
+
+Configuration:
+
+Le serveur SMTP
+L'email d'envoi
+L'email de reception est modifiable depuis le code.
+Emplacement fichiers de logs
+                                                                                                                    Groupe 3
