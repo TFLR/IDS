@@ -38,6 +38,9 @@ def add_to_blacklist(ip):
         # Exécute la commande Iptables pour ajouter l'adresse IP à la liste noire
         subprocess.run(IPTABLES_CMD.format(ip), shell=True)
 
+
+
+
 def sendmail(bodymail):
      global LASTBODYMAIL
      message = MIMEMultipart()
@@ -72,10 +75,10 @@ def DetectionSQL(s,ip):
        print("Injection sql détectée")
        if s.find("sqlmap") > 0 :
           print("avec Sqlmap")
-       print("Adresse IP suspecte: ",ip)
+          print("Adresse IP suspecte: ",ip)
+          add_to_blacklist(ip)
        bodymail='Injection SQL détecté'
        sendmail(bodymail)
-       add_to_blacklist(ip)  
        
 def BanIp(ip):
     print("Adresse IP suspecte détectée: ", ip)
