@@ -10,8 +10,8 @@
 
 Notre IDS est fonctionnel avec apache et mysql. Il scan les fichiers de logs d'apache ainsi que celui de mysql pour détecter des vulnérabilités et des attaques malveillantes.
 
-Apache : '/var/log/apache2/access.log'.
-Mysql : '/var/log/mysql/mysql/log'.
+Apache : '/var/log/apache2/access.log'\n
+Mysql : '/var/log/mysql/mysql/log'\n
 
 ![image](https://github.com/TFLR/IDS/assets/79453369/a6834b8c-a6c7-4f42-847b-80f628a66f6f)
 
