@@ -28,19 +28,19 @@ Requis:
 
 Activer les logs mysql:
 
-SET GLOBAL general_log_file = "/var/log/mysql/mysql.log";
-SET GLOBAL general_log = 'ON';
+SET GLOBAL general_log_file = "/var/log/mysql/mysql.log";</br>
+SET GLOBAL general_log = 'ON';</br>
 
 Exécution:
 
-https://github.com/TFLR/IDS.git</br>
+git clone https://github.com/TFLR/IDS.git</br>
 cd IDS</br>
 sudo python3 ids.py</br>
 
 Configuration:
 
-Le serveur SMTP
-L'email d'envoi
-L'email de reception est modifiable depuis le code.
-Emplacement fichiers de logs
-                                                                                                                    Groupe 3
+Le serveur SMTP</br>
+L'email d'envoi</br>
+L'email de reception est modifiable depuis le code.</br>
+Emplacement fichiers de logs</br>
+                                                                                                                   </br> Groupe 3
