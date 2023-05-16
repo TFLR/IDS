@@ -24,6 +24,6 @@ Requis:
 
 Exécution:
 
-https://github.com/TFLR/IDS.git
-cd IDS
-sudo python3 ids.py
+https://github.com/TFLR/IDS.git</br>
+cd IDS</br>
+sudo python3 ids.py</br>
