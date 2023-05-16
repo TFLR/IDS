@@ -39,8 +39,8 @@ sudo python3 ids.py</br>
 
 Configuration:
 
-Le serveur SMTP</br>
+Le serveur SMTP (Il faut un mot de passe application pour l'utiliser)</br>
 L'email d'envoi</br>
 L'email de reception est modifiable depuis le code.</br>
-Emplacement fichiers de logs</br>
+Emplacement des fichiers de logs</br>
                                                                                                                    </br> Groupe 3
