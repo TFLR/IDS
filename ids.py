@@ -55,10 +55,47 @@ def sendmail(bodymail):
               server.login(smtp_username, smtp_password)
               server.sendmail(from_email, to_email, message.as_string())
               LASTBODYMAIL = bodymail
-
+              
+def DetectionXSS(s):
+    ArrayXSS = ['<script>','</script>']
+    XSS = False
+    for a in ArrayXSS:
+        if a in s.lower():
+            XSS = True
+            break
+                    
+    if XSS:
+       print("XSS trouvé")
+       bodymail='XSS trouvé'
+       sendmail(bodymail)
+       XSS = False
+       
+def DetectionSQL(s,ip):
+    if s.find("%27") > 0 :
+       print("Injection sql détectée")
+       if s.find("sqlmap") > 0 :
+          print("avec Sqlmap")
+       print("Adresse IP suspecte: ",ip)
+       bodymail='Injection SQL détecté'
+       sendmail(bodymail)
+       add_to_blacklist(ip)  
+       
+def BanIp(ip):
+    print("Adresse IP suspecte détectée: ", ip)
+    bodymail='Adresse IP suspecte détectée et ip bannie :'+ ip
+    sendmail(bodymail)
+    add_to_blacklist(ip)
+    
+def DetectionNikto(s,ip):
+    if s.find("Nikto") > 0 :
+       print("Nikto détecté")
+       print("Adresse IP suspecte: ",ip)
+       bodymail='Nikto détecté'
+       sendmail(bodymail)
+       add_to_blacklist(ip)
+       
 # Fonction pour analyser les logs Apache en temps réel
 def analyze_logs():
-
     counter = 0
     NUM_REQUESTS_TO_CHECK = 20
     with open(LOG_FILE_PATH, "r") as log_file, open(LOGMYSQL, "r") as log_file2:
@@ -66,16 +103,10 @@ def analyze_logs():
         log_file2.seek(0, os.SEEK_END)
         while True:
             line1 = log_file2.readline()
-            if line1.find("<script>") > 0 :
-               print("XSS trouvé")
-               bodymail='XSS trouvé'
-               sendmail(bodymail)
-
+            DetectionXSS(line1)
             line = log_file.readline()
-#            print(line)
-#            print(line1)
             if not line:
-                time.sleep(0.5) # Attente de 1 seconde pour les nouvelles entrées de log
+                time.sleep(0.5) # Attente de 0.5 seconde pour les nouvelles entrées de log
                 continue
             # Extraction de l'adresse IP et du timestamp de l'entrée de log
             match = re.search(r"(\d+\.\d+\.\d+\.\d+).*\[(\d+/\w+/\d+:\d+:\d+:\d+)", line)
@@ -84,16 +115,8 @@ def analyze_logs():
                 timestamp_str = match.group(2)
                 timestamp = datetime.strptime(timestamp_str, "%d/%b/%Y:%H:%M:%S")
                 if ip not in BLACKLIST:
-
-                    if line.find("%27") > 0 :
-                       print("Injection sql détectée")
-                       print("Adresse IP suspecte: ",ip)
-                       bodymail='Injection SQL détecté'
-                       sendmail(bodymail)
-                       add_to_blacklist(ip)
-
+                    DetectionSQL(line,ip)
                     # Vérification de conditions pour déterminer si l'adresse IP est suspecte
-                    # Dans cet exemple, on considère comme suspectes les adresses IP qui ont plus de 10 requêtes en 5 secondes
                     suspicious = False
                     for entry in log_file.readlines():
                         entry_match = re.search(r"(\d+\.\d+\.\d+\.\d+).*\[(\d+/\w+/\d+:\d+:\d+:\d+)", entry)
@@ -106,22 +129,13 @@ def analyze_logs():
                                 if counter == NUM_REQUESTS_TO_CHECK:
                                     suspicious = True
                                     counter = 0
-                                    if line.find("Nikto") > 0 :
-                                       print("Nikto détecté")
-                                       print("Adresse IP suspecte: ",ip)
-                                       bodymail='Nikto détecté'
-                                       sendmail(bodymail)
-                                       add_to_blacklist(ip)
+                                    DetectionNikto(line,ip)
                             else:
                                 counter = 0
                                 break
                     if suspicious:
-                          print("Adresse IP suspecte détectée: ", ip)
-                          bodymail='Adresse IP suspecte détectée et ip bannie :'+ ip
-                          sendmail(bodymail)
-                          add_to_blacklist(ip)
+                       BanIp(ip)
 
-# Exécution du programme
 if __name__ == "__main__":
     try:
          print("  ___ ____  ____")
